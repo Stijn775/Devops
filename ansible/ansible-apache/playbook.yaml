@@ -1,0 +1,24 @@
+---
+- name: INSTALL WEBSERVER ON LINUX SYSTEM
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: INSTALL APACHE2
+      apt: name=apache2 update_cache=yes state=latest
+ 
+    - name: ENABLE MOD_REWRITE
+      apache2_module: name=rewrite state=present
+      notify:
+        - RESTART APACHE2
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /home/devasc/labs/devnet-src/ansible/ansible-apache/index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+ 
+  handlers:
+    - name: RESTART APACHE2
+      service: name=apache2 state=restarted

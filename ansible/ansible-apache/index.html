@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stijn Dekeyser</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* Definieer de grootte voor de kaartcontainer */
+        #mapid {
+            height: 400px;
+            width: 80%;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+        body { font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <h1>Pagina van Stijn Dekeyser</h1>
+
+    <h2>Huidige Datum en Tijd (Lokaal)</h2>
+    <p id="current-datetime">Laden...</p>
+
+    <h2>Huidige Locatie</h2>
+    <p id="location-status">Geolocatie wordt geladen of is niet beschikbaar...</p>
+    <div id="mapid"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        // 1. Datum en Tijd Functie
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('current-datetime').textContent = now.toLocaleDateString('nl-NL', options);
+        }
+        // Update de datum onmiddellijk en dan elke seconde
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // 2. Kaart en Geolocatie Functie
+        
+        // Initialiseer de kaart op een neutrale positie
+        var map = L.map('mapid').setView([52.5, 5.75], 6); // Standaard focus op Nederland
+
+        // Voeg de OpenStreetMap tiles toe
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Kaartdata &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+        }).addTo(map);
+
+        // Vraag om geolocatie
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError);
+            document.getElementById('location-status').textContent = 'Wachten op locatie...';
+        } else {
+            document.getElementById('location-status').textContent = 'Geolocatie wordt niet ondersteund in uw browser.';
+        }
+
+        function onLocationFound(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+            const latlng = [lat, lon];
+            
+            // Verplaats de kaart naar de locatie en zoom in
+            map.setView(latlng, 15); 
+            
+            // Toon de coördinaten
+            document.getElementById('location-status').textContent = 
+                `Locatie gevonden: Breedtegraad: ${lat.toFixed(4)}, Lengtegraad: ${lon.toFixed(4)}. Nauwkeurigheid: ${accuracy.toFixed(0)} meter.`;
+
+            // Plaats een marker
+            L.marker(latlng).addTo(map)
+                .bindPopup("U bent hier!").openPopup();
+
+            // Toon de nauwkeurigheid met een cirkel
+            L.circle(latlng, accuracy).addTo(map);
+        }
+
+        function onLocationError(error) {
+            let message = '';
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "Toegang tot geolocatie geweigerd door de gebruiker.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Locatie-informatie is niet beschikbaar.";
+                    break;
+                case error.TIMEOUT:
+                    message = "De aanvraag voor de locatie van de gebruiker is verlopen.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = "Een onbekende geolocatie-fout is opgetreden.";
+                    break;
+            }
+            document.getElementById('location-status').textContent = `Fout bij ophalen locatie: ${message}`;
+            console.error(error);
+        }
+
+    </script>
+</body>
+</html>
