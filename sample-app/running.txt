@@ -1,0 +1,13 @@
+CONTAINER ID   IMAGE                       COMMAND                  CREATED              STATUS                           PORTS                                       NAMES
+9d4b4b1dea8a   sampleapp                   "/bin/sh -c 'python3…"   About a minute ago   Up About a minute                0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   samplerunning
+b9cd0f352e99   76a545d97be5                "/bin/sh -c 'pip ins…"   57 minutes ago       Exited (2) 56 minutes ago                                                    epic_turing
+f964941d3bdd   76a545d97be5                "/bin/sh -c 'pip ins…"   58 minutes ago       Exited (2) 58 minutes ago                                                    affectionate_moser
+296ccc7347aa   76a545d97be5                "/bin/sh -c 'pip ins…"   About an hour ago    Exited (2) About an hour ago                                                 brave_bhaskara
+d55e5abfaec6   76a545d97be5                "/bin/sh -c 'pip ins…"   About an hour ago    Exited (2) About an hour ago                                                 competent_liskov
+ce43ee4c3139   76a545d97be5                "/bin/sh -c 'pip ins…"   About an hour ago    Exited (2) About an hour ago                                                 heuristic_solomon
+08a6fbf4d890   76a545d97be5                "/bin/sh -c 'pip ins…"   About an hour ago    Exited (2) About an hour ago                                                 beautiful_ishizaka
+2d8c4f4dc5ac   76a545d97be5                "/bin/sh -c 'pip ins…"   About an hour ago    Exited (2) About an hour ago                                                 xenodochial_napier
+71e8eee0aa4a   76a545d97be5                "/bin/sh -c 'pip ins…"   About an hour ago    Exited (2) About an hour ago                                                 festive_snyder
+b38c12c62a88   jenkins/jenkins:lts-jdk17   "/usr/bin/tini -- /u…"   5 weeks ago          Exited (255) About an hour ago   0.0.0.0:8080->8080/tcp, 50000/tcp           jenkins_server
+62f1d207d4d6   hello-world                 "/hello"                 6 weeks ago          Exited (0) 6 weeks ago                                                       nostalgic_tu
+de927d1a1ebc   alpine                      "sh"                     7 weeks ago          Exited (0) 7 weeks ago                                                       suspicious_zhukovsky
