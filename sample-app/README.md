@@ -46,11 +46,16 @@ curl http://localhost:8080
 # Logs zien
 docker logs samplerunning
 
+# Running Containers Bekijken
+docker ps -a
+
 # Stop
 docker stop samplerunning
+docker stop "eerste 4 getallen"
 
 # Remove
 docker rm samplerunning
+docker rm "eerste 4 getallen"
 ```
 
 ## Vereisten

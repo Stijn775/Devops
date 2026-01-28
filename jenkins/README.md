@@ -1,9 +1,18 @@
-ea91e497fb8a42f5a2cb5e94a81602d6 <- admin password
+17e45eadce554d889ae0750cdeb23903 <- admin password
 
 ## Jenkins Opstarten
 
+## Indien Problemen
+```bash
+docker stop jenkins_server && docker rm jenkins_server
+
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins_server -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --group-add $(getent group docker | cut -d: -f3) jenkins/jenkins:lts
+
+docker exec -u root jenkins_server bash -c "apt-get update && apt-get install -y docker.io"
+```
 ### Stap 1: Jenkins Docker Container Starten
 ```bash
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins_server -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 docker start jenkins_server
 ```
 
