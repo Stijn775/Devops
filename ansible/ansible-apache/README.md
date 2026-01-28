@@ -1,5 +1,65 @@
 # Ansible Apache Webserver Project
 
+## Snelstart - Stap voor Stap
+
+### Stap 1: Vereisten Controleren
+```bash
+# Controleer of Ansible is geïnstalleerd
+ansible --version
+
+# Als Ansible niet is geïnstalleerd:
+sudo apt update
+sudo apt install ansible -y
+```
+
+### Stap 2: Navigeer naar de Projectmap
+```bash
+cd /home/devasc/labs/devnet-src/ansible/ansible-apache
+```
+
+### Stap 3: Configureer je Doelserver
+Bewerk het `hosts` bestand en vul je server gegevens in:
+```bash
+nano hosts
+```
+
+Voorbeeld configuratie:
+```ini
+[webservers]
+192.168.1.100 ansible_ssh_user=ubuntu ansible_ssh_pass=jouwwachtwoord
+```
+
+### Stap 4: Test de Connectie
+```bash
+# Test of Ansible de server kan bereiken
+ansible all -i hosts -m ping
+```
+
+Verwachte output: `"ping": "pong"`
+
+### Stap 5: Voer het Playbook Uit
+```bash
+# Installeer en configureer Apache
+ansible-playbook playbook.yaml -i hosts
+```
+
+### Stap 6: Verifieer de Installatie
+```bash
+# Controleer Apache status op de remote server
+ansible webservers -i hosts -m shell -a "systemctl status apache2"
+
+# Of bezoek in je browser:
+# http://[IP-ADRES-VAN-SERVER]
+```
+
+### Stap 7: Lokale Info Controleren (Optioneel)
+```bash
+# Voer de lokale info check uit
+ansible-playbook checklocalinfo.yml
+```
+
+---
+
 ## Overzicht
 Dit project installeert en configureert een Apache2 webserver op Linux-systemen met behulp van Ansible. Het demonstreert basis Ansible-functionaliteiten zoals tasks, handlers en file management.
 
